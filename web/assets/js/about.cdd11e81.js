@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["about"],{f820:function(n,t,e){"use strict";e.r(t);var o=function(){var n=this,t=n.$createElement,e=n._self._c||t;return e("div")},u=[],c={name:"",mixins:[],components:{},props:{},data:function(){return{}},computed:{},watch:{},created:function(){},mounted:function(){},destroyed:function(){},methods:{}},a=c,i=e("2877"),r=Object(i["a"])(a,o,u,!1,null,null,null);t["default"]=r.exports}}]);
+//# sourceMappingURL=about.cdd11e81.js.map

@@ -1,0 +1,321 @@
+@import "./variable.less";
+//常用css  @import "../base/css/mixin.less";
+
+// 盒子宽高
+.size(@w, @h) {
+    width: @w;
+    height: @h;
+}
+
+// 最小尺寸, 兼容IE6
+.min-width(@min-w) {
+    min-width: @min-w;
+    _width: @min-w;
+}
+
+.min-height(@min-h) {
+    min-height: @min-h;
+    _height: @min-h;
+}
+
+// 内联块级元素, 兼容IE6
+.dib() {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+// 固定定位, 兼容IE6
+.fixed() {
+    position: fixed;
+    _position: absolute;
+    *zoom: 1;
+}
+
+// 统一盒模型
+.border-box() {
+
+    *,
+    *:after,
+    *:before {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+}
+
+// 文字图片居中
+.center(text-x) {
+    text-align: center;
+}
+
+.center(text-y) {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+// 块级元素水平居中
+.center(auto-x) {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// 居中, 不确定尺寸, 不兼容 IE6
+.center(unknown) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.center(unknown-x) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center(unknown-y) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+// 居中, 确定尺寸, 兼容 IE6
+.center(known, @w, @h) {
+    .size(@w, @h);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -(@w / 2);
+    margin-left: -(@h / 2);
+}
+
+.center(known-x, @w) {
+    width: @w;
+    position: absolute;
+    left: 50%;
+    margin-left: -(@h / 2);
+}
+
+.center(known-y, @h) {
+    height: @h;
+    position: absolute;
+    top: 50%;
+    margin-top: -(@w / 2);
+}
+
+// 居中, CSS3 平移方式, 兼容性不行
+.center(translate) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// 居中, Flex 方式, 兼容性不行
+.center(flex) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// 多个子项布局
+.list(float, @w: 25%) {
+    float: left;
+    width: @w;
+}
+
+.list(inline, @w: 25%) {
+    .dib();
+    width: @w;
+}
+
+.list(flex) {
+    flex: 1;
+}
+
+// 遮罩层, 全屏遮罩、区域遮罩
+.over-screen(fixed) {
+    .fixed();
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.over-screen(absolute) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+// 容器宽高比固定
+// 100* 1/1 = 100%
+// 100* 3/4 = 75%
+.fixed-ratio(@padding-top: 100%) {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-top: @padding-top;
+
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+// 扩展点击区域
+.extend-click() {
+    position: relative;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+    }
+}
+
+// 定宽居中页面布局
+.layout-page(@width: 1200px) {
+    width: @width;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// 侧边栏
+// 主要区域：overflow: hidden; margin-left: xx; margin-right: xx;
+.sidebar(left, @width) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @width;
+}
+
+.sidebar(right, @width) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: @width;
+}
+
+
+// 禁止换行, 文本溢出省略号显示 (一行)
+.ellipsis() {
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-all;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+// 用 max-width 来防止图片撑破容器
+.max-img() {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+// 2x 3x 背景图片 默认png
+.bg-image(@url, @type: 'png') {
+    background-image: url("@url + '@2x.'+@type");
+
+    @media (-webkit-min-device-pixel-ratio: 3),
+    (min-device-pixel-ratio: 3) {
+        background-image: url("@url + '@3x.'+@type");
+    }
+}
+
+.page_pos {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+// 滤镜: 将彩色照片显示为黑白照片
+.grayscale() {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+}
+
+// 模糊
+.blur(@blur: 10px) {
+    filter: blur(@blur);
+    -webkit-filter: blur(@blur);
+    -moz-filter: blur(@blur);
+    -o-filter: blur(@blur);
+    -ms-filter: blur(@blur);
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='@{blur}');
+    *zoom: 1;
+}
+
+// 透明度, 兼容 IE8
+.opacity(@opacity: 20) {
+    opacity: @opacity / 100;
+    filter: alpha(opacity=@opacity);
+}
+
+// 首字下沉
+.first-letter(@font-size: 6em) {
+    &::first-letter {
+        float: left;
+        line-height: 1;
+        font-size: @font-size;
+    }
+}
+
+// 1 像素边框问题
+.onepx() {
+    position: relative;
+
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        border-top: 1px solid rgba(7, 17, 27, 0.1);
+        transform: scaleY(0.5);
+    }
+}
+
+.onepx(top) {
+    &:after {
+        top: 0;
+    }
+}
+
+.onepx(bottom) {
+    &:after {
+        bottom: 0;
+    }
+}
+
+.onepx-easy(top, @color: #ccc) {
+    box-shadow: inset 0px -1px 1px -1px @color;
+}
+
+.onepx-easy(bottom, @color: #ccc) {
+    box-shadow: inset 0px 1px 1px -1px @color;
+}
